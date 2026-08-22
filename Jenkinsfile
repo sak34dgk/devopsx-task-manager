@@ -5,6 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
+                git branch: 'main',
                 git 'https://github.com/sak34dgk/devopsx-task-manager.git'
             }
         }
