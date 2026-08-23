@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t devopsx-task-manager:latest .'
+                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t devopsx-task-manager:latest .'
             }
         }
     }
