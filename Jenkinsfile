@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build & Test') {
             steps {
-                bat 'mvnw.cmd test'
+                bat 'mvnw.cmd clean package'
             }
         }
 
