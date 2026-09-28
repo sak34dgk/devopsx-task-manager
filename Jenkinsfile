@@ -1,7 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        KUBECONFIG = 'C:\\Users\\Sakshi\\.kube\\config'
+    }
+
     stages {
+
         stage('Build & Test') {
             steps {
                 bat 'mvnw.cmd clean package'
@@ -16,16 +21,23 @@ pipeline {
 
         stage('Check Kubernetes') {
             steps {
-                bat 'set KUBECONFIG=C:\\Users\\Sakshi\\.kube\\config && "C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" config current-context'
-                bat 'set KUBECONFIG=C:\\Users\\Sakshi\\.kube\\config && "C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" get nodes'
+                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" config current-context'
+                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" get nodes'
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Deploy to Kubernetes') {
             steps {
-                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" stop devopsx-task-manager || exit /b 0'
-                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" rm devopsx-task-manager || exit /b 0'
-                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" run -d -p 8081:8080 --name devopsx-task-manager devopsx-task-manager:latest'
+                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" apply -f k8s\\deployment.yaml'
+                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" apply -f k8s\\service.yaml'
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" rollout status deployment/devopsx-task-manager'
+                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" get pods'
+                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" get service devopsx-task-manager-service'
             }
         }
     }
