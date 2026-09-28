@@ -16,6 +16,6 @@ class TaskControllerTest {
 
         List<?> tasks = controller.getTasks();
 
-        assertEquals(3, tasks.size());
+        assertEquals(4, tasks.size());
     }
 }

@@ -15,7 +15,8 @@ public class TaskController {
         return List.of(
                 new Task(1L, "Learn Docker", "IN_PROGRESS"),
                 new Task(2L, "Build Jenkins Pipeline", "PENDING"),
-                new Task(3L, "Deploy to Kubernetes", "PENDING")
+                new Task(3L, "Deploy to Kubernetes", "PENDING"),
+                new Task(4L, "Monitor Application Health", "PENDING")
         );
     }
 }
