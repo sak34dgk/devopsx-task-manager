@@ -44,5 +44,11 @@ pipeline {
                 bat '"%KUBECTL%" get service devopsx-task-manager-service'
             }
         }
+        stage('Health Check') {
+            steps {
+                bat '"%KUBECTL%" get pods'
+                bat '"%KUBECTL%" get deployment devopsx-task-manager'
+            }
+        }
     }
 }
