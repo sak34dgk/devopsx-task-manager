@@ -16,7 +16,8 @@ pipeline {
 
         stage('Check Kubernetes') {
             steps {
-                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" get nodes'
+                bat 'set KUBECONFIG=C:\\Users\\Sakshi\\.kube\\config && "C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" config current-context'
+                bat 'set KUBECONFIG=C:\\Users\\Sakshi\\.kube\\config && "C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" get nodes'
             }
         }
 
