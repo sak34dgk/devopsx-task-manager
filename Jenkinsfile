@@ -14,6 +14,12 @@ pipeline {
             }
         }
 
+        stage('Check Kubernetes') {
+            steps {
+                bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\kubectl.exe" get nodes'
+            }
+        }
+
         stage('Run Docker Container') {
             steps {
                 bat '"C:\\Users\\Sakshi\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" stop devopsx-task-manager || exit /b 0'
